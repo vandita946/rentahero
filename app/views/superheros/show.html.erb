@@ -1,0 +1,15 @@
+<h1><%= @superhero.name %></h1>
+<%= cl_image_tag @superhero.photo.key, height: 300, width: 400, crop: :fill if @superhero.photo.attached? %>
+<p>Power: <%= @superhero.superpower %></p>
+<p>Description: <%= @superhero.description %></p>
+<p>Price (per day): <%= @superhero.price %></p>
+<%= link_to "Book #{@superhero.name} now!", new_superhero_booking_path(@superhero)%>
+<br>
+<br>
+<h2>Reviews for <%= @superhero.name %></h2>
+<% @superhero.reviews.each do |review| %>
+  <div class="card">
+    <h4>Rating: <%= review.rating %>/5</h4>
+    <p><%= review.content %></p>
+  </div>
+<% end %>

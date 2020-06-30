@@ -1,0 +1,7 @@
+<h1><%= @superhero.name %> is on their way!</h1>
+<%= simple_form_for(@booking) do |f| %>
+  <%= f.input :start_date, as: :date, html5: true %>
+  <%= f.input :end_date, as: :date, html5: true %>
+  <%= hidden_field_tag(:superhero_id, @superhero.id) %>
+  <%= f.submit %>
+<% end %>

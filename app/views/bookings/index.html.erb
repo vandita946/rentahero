@@ -1,0 +1,35 @@
+<h1>Here are all your bookings</h1>
+<% @bookings.each do |booking| %>
+  <div class="card" style="width: 18rem;">
+        <%= cl_image_tag booking.superhero.photo.key if booking.superhero.photo.attached? %>
+        <div class="card-body">
+          <h5 class="card-title"><%= booking.superhero.name %></h5>
+          <h5 class="card-title">User: <%= booking.user.name %></h5>
+          <h6 class="card-text">Status: <%= booking.status %> </h6>
+          <p class="card-text"> from <%= booking.start_date %> to <%= booking.end_date %> </p>
+          <strong class="card-text">Total amount: <%= booking.total_price %></strong>
+          <!-- ACCEPT button if status = requested and you're the @superhero.user, then status changes to confirmed -->
+          <% if booking.superhero.user == current_user %>
+            <% if booking.status == "Requested" %>
+              <%= form_for booking, remote: true do |f| %>
+                <%= f.hidden_field :status, value: "Confirmed" %>
+                <%= f.submit "Confirm", data: { confirm: "Confirm this booking?" }, class: "btn btn-success"%>
+              <% end %>
+            <% end %>
+          <% end %>
+          <!-- CANCEL button if status = requested and you're the @booking.user, then status changes to canceled -->
+          <% if booking.status == "Requested" || booking.status == "Confirmed" %>
+            <%= form_for booking, remote: true do |f| %>
+            <%= f.hidden_field :status, value: "Canceled" %>
+            <%= f.submit "Cancel", data: { confirm: "Are you sure?" }, class: "btn btn-danger"%>
+            <% end %>
+          <% end %>
+          <!-- ADD A REVIEW button if status = past and you're the @booking.user -->
+          <% if booking.status == "Past" && booking.review.nil? %>
+            <%= link_to new_booking_review_path(booking) do %>
+              <button type="button" class="btn btn-info">Add a review</button>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+<% end %>

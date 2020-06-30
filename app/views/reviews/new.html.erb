@@ -1,0 +1,6 @@
+<h1>How was your experience with <%= @booking.superhero.name %>?</h1>
+<%= simple_form_for [@booking, @review] do |f| %>
+    <%= f.input :rating %>
+    <%= f.input :content %>
+    <%= f.button :submit, "Submit review", class: "btn btn-success"%>
+<% end %>

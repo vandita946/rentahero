@@ -1,0 +1,11 @@
+<h1>Welcome to RentAHero</h1>
+<% @superheros.each do |hero| %>
+  <div class="card">
+    <h6><%= hero.name %></h6>
+    <p>Power: <%= hero.superpower %></p>
+    <p>Description: <%= hero.description %></p>
+    <p>Price (per day): <%= hero.price %></p>
+    <%= cl_image_tag hero.photo.key, height: 300, width: 400, crop: :fill if hero.photo.attached? %>
+    <%= link_to "View details", superhero_path(hero) %>
+  </div>
+<% end %>
